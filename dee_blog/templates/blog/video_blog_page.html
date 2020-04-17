@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+
+
+{% block content %}
+    {% image self.banner_image fill-900x400 as banner %}
+    <img src="{{ banner.url }}" alt="{{ banner.alt }}" style="width: 100%; height: auto;">
+    <div class="container mt-5 mb-5">
+        <div class="text-center">
+            <h1>
+                {% if self.custom_title %}
+                    {{ self.custom_title }}
+                {% else %}
+                    {{ self.title }}
+                {% endif %}
+            </h1>
+        </div>
+        <ul>
+            {% for iterationModel in self.blog_authors.all %}
+                {% image iterationModel.author.image fill-100x100 as img %}
+                <li>
+                    <img src="{{ img.url }}" alt="{{ img.alt }}">
+                    <span>{{ iterationModel.author.name }}</span>
+                    {% if iterationModel.author.website %}
+                        <a href="{{ iterationModel.author.website }}">(contact)</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 offset-lg-2">
+                <iframe width="1024" height="768" src="https://www.youtube.com/embed/{{ self.youtube_video_id }}"
+                        frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                {% for block in self.content %}
+                    {% include_block block %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
