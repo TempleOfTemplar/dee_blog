@@ -30,6 +30,8 @@ INSTALLED_APPS = [
     'site_settings',
     'subscribers',
     'blog',
+    'menus',
+    'contact',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
@@ -47,6 +49,7 @@ INSTALLED_APPS = [
     'wagtail.core',
     'wagtail.api.v2',  # чтобы работало API
 
+    'wagtailmenus', #wagtailmenus package
     'rest_framework',
 
     'modelcluster',
@@ -91,6 +94,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'wagtail.contrib.settings.context_processors.settings',
+                'wagtailmenus.context_processors.wagtailmenus', #wagtailmenus package
             ],
         },
     },
