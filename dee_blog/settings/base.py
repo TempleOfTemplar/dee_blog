@@ -49,14 +49,19 @@ INSTALLED_APPS = [
     'wagtail.core',
     'wagtail.api.v2',  # чтобы работало API
 
-    'wagtailmenus', #wagtailmenus package
+    'wagtailmenus',  # wagtailmenus package
     'captcha',
-    'wagtailcaptcha', #wagtailcaptcha package
+    'wagtailcaptcha',  # wagtailcaptcha package
+    'allauth',  # allauth package
+    'allauth.account',  # allauth package
+    'allauth.socialaccount',  # allauth package
+    'allauth.socialaccount.providers.google',  # allauth package
     'rest_framework',
 
     'modelcluster',
     'taggit',
-
+    # The following apps are required:
+    'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -66,6 +71,21 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',  # чтобы работала карта сайта
 
 ]
+
+SITE_ID = 1
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '123',
+            'secret': '456',
+            'key': ''
+        }
+    }
+}
 
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -92,15 +112,23 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.request',
+                'django.template.context_processors.request',  # `allauth` needs this from django
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'wagtail.contrib.settings.context_processors.settings',
-                'wagtailmenus.context_processors.wagtailmenus', #wagtailmenus package
+                'wagtailmenus.context_processors.wagtailmenus',  # wagtailmenus package
             ],
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 WSGI_APPLICATION = 'dee_blog.wsgi.application'
 
@@ -176,7 +204,24 @@ WAGTAIL_SITE_NAME = "dee_blog"
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'http://example.com'
 
-#Recaptcha settings
+# Recaptcha settings
 RECAPTCHA_PUBLIC_KEY = "6Lct4uoUAAAAAMzhpNQImRu_oEaR4FbZJopAaOsM"
 RECAPTCHA_PRIVATE_KEY = "6Lct4uoUAAAAAEBtKxnH49quxom_mUIGpV3gY7L9"
 NOCAPTCHA = True
+
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_LOGIN_ON_PASSWORD_RESET = True
+ACCOUNT_LOGOUT_REDIRECT_URL = '/login/'
+ACCOUNT_PRESERVE_USERNAME_CASING = False
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+ACCOUNT_USERNAME_BLACKLIST = ["admin", "god", "templar"]
+ACCOUNT_USERNAME_MIN_LENGTH = 3

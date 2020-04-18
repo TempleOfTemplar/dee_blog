@@ -44,7 +44,16 @@
 
     <div class="collapse navbar-collapse" id="navbarColor01">
         {% main_menu max_levels=1 template="menus/main_menu.html" %}
-
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                {% if request.user.is_authenticated %}
+                    Hi {{ request.user.username }}, <a href="{% url "account_logout" %}" class="nav-link">Logout?</a>
+                {% else %}
+                    Hi Guest!
+                    <a href="{% url "account_login" %}" class="nav-link">Loin</a>
+                {% endif %}
+            </li>
+        </ul>
         {#        <ul class="navbar-nav mr-auto">#}
         {#            <li class="nav-item active">#}
         {#                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>#}
