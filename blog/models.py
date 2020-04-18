@@ -90,6 +90,9 @@ class BlogListingPage(RoutablePageMixin, Page):
     """Listing page for Blog pages"""
 
     template = "blog/blog_listing_page.html"
+    max_count = 1
+    ajax_template = "blog/blog_listing_page_ajax.html"
+    subpage_types = ['blog.VideoBlogPage', 'blog.ArticleBlogPage']
 
     custom_title = models.CharField(
         max_length=100,

@@ -31,7 +31,7 @@ INSTALLED_APPS = [
     'subscribers',
     'blog',
     'menus',
-    'contact',
+    'forms',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'wagtail.api.v2',  # чтобы работало API
 
     'wagtailmenus', #wagtailmenus package
+    'captcha',
+    'wagtailcaptcha', #wagtailcaptcha package
     'rest_framework',
 
     'modelcluster',
@@ -173,3 +175,8 @@ WAGTAIL_SITE_NAME = "dee_blog"
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'http://example.com'
+
+#Recaptcha settings
+RECAPTCHA_PUBLIC_KEY = "6Lct4uoUAAAAAMzhpNQImRu_oEaR4FbZJopAaOsM"
+RECAPTCHA_PRIVATE_KEY = "6Lct4uoUAAAAAEBtKxnH49quxom_mUIGpV3gY7L9"
+NOCAPTCHA = True
